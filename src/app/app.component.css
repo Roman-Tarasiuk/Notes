@@ -19,9 +19,12 @@
 
     .scrolling {
         overflow: auto;
-        height: 100vh;
+        max-height: 100vh;
     }
     .editing-textarea {
         width: 100%;
+    }
+    .mr-1 {
+      margin-right: 0.25rem !important;
     }
   }

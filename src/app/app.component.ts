@@ -12,6 +12,7 @@ export class AppComponent {
   current: Note;
   editing: boolean = false;
   adding: boolean = false;
+  searching: boolean = false;
 
   titleEl: HTMLInputElement;
   descriptionEl: HTMLInputElement;
@@ -101,5 +102,14 @@ export class AppComponent {
     this.titleEl = document.getElementById('title') as HTMLInputElement;
     this.descriptionEl = document.getElementById('description') as HTMLInputElement;
     this.textEl = document.getElementById('text') as HTMLInputElement;
+  }
+
+  search() {
+    if (!this.searching) {
+      this.searching = true;
+    }
+    else {
+
+    }
   }
 }

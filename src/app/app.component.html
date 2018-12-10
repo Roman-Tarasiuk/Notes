@@ -25,8 +25,14 @@
     </div>
     <div class="col-sm-9 scrolling">
       <div>
-        <button class="btn btn-success" (click)="toggleAdding()">Add</button>
-        <button class="btn btn-success" (click)="toggleEditing()">Edit</button>
+        <button class="btn btn-success mr-1" *ngIf="!editing" (click)="toggleAdding()">Add</button>
+        <button class="btn btn-success mr-1" *ngIf="!adding" (click)="toggleEditing()">Edit</button>
+        
+        <span *ngIf="searching">
+          <input type="text" class="mr-1">
+          <button class="btn btn-default mr-1" (click)="searching=false;">&times;</button>
+        </span>
+        <button class="btn btn-success" (click)="search()"><span class="glyphicon glyphicon-search"></span></button>
       </div>
       <div *ngIf="current">
         {{current.text}}
@@ -42,8 +48,8 @@
     <p>Text:</p>
     <textarea id="text"        class="editing-textarea"></textarea>
 
-    <button class="btn btn-warning" *ngIf="adding" (click)="addNote()">Add</button>
-    <button class="btn btn-warning" *ngIf="editing && !adding" (click)="updateNote()">Update</button>
+    <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
+    <button class="btn btn-warning mr-1" *ngIf="editing && !adding" (click)="updateNote()">Update</button>
     <button class="btn btn-warning" (click)="cancelListModification()">Cancel</button>
   </div>
 </div>

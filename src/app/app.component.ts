@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Note } from '../core/note';
+import { Note } from './core/note';
+import { NotesService } from './core/notes.service';
 
 import { DomSanitizer } from '@angular/platform-browser'
 import { PipeTransform, Pipe } from "@angular/core";
@@ -28,17 +29,17 @@ export class AppComponent {
   adding: boolean = false;
   searching: boolean = false;
   showHelp: boolean = false;
+  updated: boolean = false;
+  exportImport: boolean = false;
+  notesService: NotesService;
 
   titleEl: HTMLInputElement;
   descriptionEl: HTMLInputElement;
   textEl: HTMLInputElement;
 
-  constructor() {
-    this.notes = [
-      new Note('New note title', 'New note description', 'New note text'),
-      new Note('New note title 2', 'New note description 2', 'New note text 2'),
-      new Note('New note title 3', 'New note description 3', 'New note text 3')
-    ];
+  constructor(notesService: NotesService) {
+    this.notesService = notesService;
+    this.notes = this.notesService.getNotes();
 
     this.current = null;
   }
@@ -98,20 +99,18 @@ export class AppComponent {
     this.titleEl.value = '';
     this.descriptionEl.value = '';
     this.textEl.value = '';
+
+    this.updated = true;
   }
 
   updateNote() {
     this.initEditorControls();
 
-    //this.notes.push(new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value));
-
-    //this.titleEl.value = '';
-    //this.descriptionEl.value = '';
-    //this.textEl.value = '';
-
     this.current.title = this.titleEl.value;
     this.current.description = this.descriptionEl.value;
     this.current.text = this.textEl.value;
+
+    this.updated = true;
   }
 
   private initEditorControls() {
@@ -127,5 +126,34 @@ export class AppComponent {
     else {
 
     }
+  }
+
+  saveChanges() {
+    this.notesService.saveNotes(this.notes);
+    this.updated = false;
+  }
+
+  deleteNote() {
+    var index = this.notes.indexOf(this.current);
+
+    if (index >= 0) {
+      this.notes.splice(index, 1);
+      this.updated = true;
+    }
+  }
+
+  isActive(n: Note) {
+    return n == this.current;
+  }
+
+  exportNotes() {
+    var expImpEl: HTMLInputElement = document.getElementById('expImp') as HTMLInputElement;
+    expImpEl.value = this.notesService.getNotesPlainText();
+  }
+
+  importNotes() {
+    var expImpEl: HTMLInputElement = document.getElementById('expImp') as HTMLInputElement;
+    this.notesService.saveNotesText(expImpEl.value);
+    this.notes = this.notesService.getNotes(expImpEl.value);
   }
 }

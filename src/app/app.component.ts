@@ -2,6 +2,20 @@ import { Component } from '@angular/core';
 
 import { Note } from '../core/note';
 
+import { DomSanitizer } from '@angular/platform-browser'
+import { PipeTransform, Pipe } from "@angular/core";
+
+// https://stackoverflow.com/questions/39628007/angular2-innerhtml-binding-remove-style-attribute
+// https://medium.com/@ahmedhamedTN/make-styles-work-when-dealing-with-innerhtml-in-angular-ac2d524ba001
+
+@Pipe({ name: 'safeHtml'})
+export class SafeHtmlPipe implements PipeTransform  {
+  constructor(private sanitized: DomSanitizer) {}
+  transform(value) {
+    return this.sanitized.bypassSecurityTrustHtml(value);
+  }
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,6 +27,7 @@ export class AppComponent {
   editing: boolean = false;
   adding: boolean = false;
   searching: boolean = false;
+  showHelp: boolean = false;
 
   titleEl: HTMLInputElement;
   descriptionEl: HTMLInputElement;
@@ -29,7 +44,6 @@ export class AppComponent {
   }
 
   clicked(n: Note) {
-    //console.log(n.text);
     this.current = n;
   }
 
@@ -48,10 +62,9 @@ export class AppComponent {
     }
 
     this.editing = !this.editing;
-    this.adding = false;
 
     if (this.editing) {
-      await this.sleep(1000);
+      await this.sleep(500);
       this.initEditorControls();
 
       this.titleEl.value = this.current.title;
@@ -65,11 +78,14 @@ export class AppComponent {
       return;
     }
 
-    this.editing = !this.editing;
-    this.adding = this.editing;
+    this.adding = !this.adding;
   }
 
-  cancelListModification() {
+  toggleHelp() {
+    this.showHelp = !this.showHelp;
+  }
+
+  cancelModification() {
     this.editing = false;
     this.adding = false;
   }

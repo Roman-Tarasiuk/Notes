@@ -1,30 +1,141 @@
 /* make sidebar nav vertical */ 
 @media (min-width: 768px) {
-    .sidebar-nav .navbar .navbar-collapse {
-      padding: 0;
-      max-height: none;
-    }
-    .sidebar-nav .navbar ul {
-      float: none;
-      display: block;
-    }
-    .sidebar-nav .navbar li {
-      float: none;
-      display: block;
-    }
-    .sidebar-nav .navbar li a {
-      padding-top: 12px;
-      padding-bottom: 12px;
-    }
-
-    .scrolling {
-        overflow: auto;
-        max-height: 100vh;
-    }
-    .editing-textarea {
-        width: 100%;
-    }
-    .mr-1 {
-      margin-right: 0.25rem !important;
-    }
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
   }
+  .sidebar-nav .navbar ul {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .scrolling {
+      overflow: auto;
+      max-height: calc(100vh - 41px);
+  }
+  .editing-textarea {
+      width: 100%;
+  }
+  .note {
+    padding-left: 5px;
+  }
+  .mt-1,
+  .my-1 {
+    margin-top: 0.25rem !important;
+  }
+  .mr-1,
+  .mx-1 {
+    margin-right: 0.25rem !important;
+  }
+  .mt-2,
+  .my-2 {
+    margin-top: 0.5rem !important;
+  }
+
+  /*https://codepen.io/brandonhimpfen/pen/BoExzV*/
+  .btn-search {
+    background: #424242;
+    border-radius: 0;
+    color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #1c1c1c;
+  }
+  .btn-search:link, .btn-search:visited {
+    color: #fff;
+  }
+  .btn-search:active, .btn-search:hover {
+    background: #1c1c1c;
+    color: #fff;
+  }
+
+  /*http://csharpindepth.com/CodeFormatterTool.aspx*/
+  :host ::ng-deep table.code,
+  :host ::ng-deep table.spec,
+  :host ::ng-deep table.results,
+  :host ::ng-deep table.compile,
+  :host ::ng-deep table.summary {
+    margin-left: 4em;
+    border: 1px solid #000000;
+    padding: 4px;
+  }
+  :host ::ng-deep table.code {
+    background-color: #e5e5e5;
+  }
+  :host ::ng-deep table.spec {
+    background-color: #aaddff;
+  }
+  :host ::ng-deep table.results {
+    background-color: #aaeeaa;
+  }
+  :host ::ng-deep table.compile {
+    background-color: #ffaaaa;
+  }
+  :host ::ng-deep table.summary {
+    background-color: #ffffff;
+  }
+  :host ::ng-deep div.code,
+  :host ::ng-deep div.output {
+    border-right: white 2px ridge; 
+    padding-right: 10px; 
+    border-top: white 2px ridge; 
+    padding-left: 10px; 
+    font-size: 10pt; 
+    padding-bottom: 10px; 
+    margin: 10px; 
+    border-left: white 2px ridge; 
+    padding-top: 10px; 
+    border-bottom: white 2px ridge; 
+    font-family: courier new; 
+    background-color: #e5e5e5;
+  }
+  /* For code snippets */
+  :host ::ng-deep span.Keyword,
+  :host ::ng-deep span.Linq,
+  :host ::ng-deep span.ReferenceType,
+  :host ::ng-deep span.ValueType,
+  :host ::ng-deep span.Modifier,
+  :host ::ng-deep span.Statement,
+  :host ::ng-deep span.MethodParameter,
+  :host ::ng-deep span.Namespace,
+  :host ::ng-deep span.DataType,
+  :host ::ng-deep span.Function,
+  :host ::ng-deep span.Method,
+  :host ::ng-deep span.Object,
+  :host ::ng-deep span.Operator,
+  :host ::ng-deep span.Property,
+  :host ::ng-deep span.SysTable,
+  :host ::ng-deep span.SysSproc,
+  :host ::ng-deep span.GlobalVariable,
+  :host ::ng-deep span.ReservedKeyword,
+  :host ::ng-deep span.SystemFunction,
+  :host ::ng-deep span.Type,
+  :host ::ng-deep span.PreProcessorDirective,
+  :host ::ng-deep span.Element {
+    color: #0000cc
+  }
+  :host ::ng-deep span.BlockComment,
+  :host ::ng-deep span.XmlComment,
+  :host ::ng-deep span.InlineComment,
+  :host ::ng-deep span.JavaDoc {
+    color: green
+  }
+  :host ::ng-deep span.String {
+    color: black
+  }
+  :host ::ng-deep span.Attention {
+    font-weight: bold;
+    color: red
+  }
+  :host ::ng-deep span.Entity {
+    color: red
+  }
+}

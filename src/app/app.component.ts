@@ -28,7 +28,6 @@ export class AppComponent {
   editing: boolean = false;
   adding: boolean = false;
   searching: boolean = false;
-  showHelp: boolean = false;
   updated: boolean = false;
   exportImport: boolean = false;
   notesService: NotesService;
@@ -80,10 +79,6 @@ export class AppComponent {
     }
 
     this.adding = !this.adding;
-  }
-
-  toggleHelp() {
-    this.showHelp = !this.showHelp;
   }
 
   cancelModification() {

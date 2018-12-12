@@ -1,31 +1,4 @@
 <div class="container my-2">
-  <div class="row" *ngIf="showHelp">
-    <h3>Usage: <button class="btn btn-default" (click)="showHelp=false;" style="float: right;">&times;</button></h3>
-    <p>1. On the <a href="https://codebeautify.org/csharpviewer">https://codebeautify.org/csharpviewer</a>
-      replace the next function (paste next function code in the browser Developer Tools):
-    </p>
-    <code class="code" ngNonBindable><span style="display: none">{{<br /></span>
-      function&nbsp;FormatJS()&nbsp;{<br />
-      &nbsp;&nbsp;editorResult.getSession().setUseWrapMode(!1);<br />
-      &nbsp;&nbsp;<span>var</span>&nbsp;e&nbsp;=&nbsp;editorAce.getValue();<br />
-      &nbsp;&nbsp;<span>if</span>&nbsp;(0&nbsp;&lt;&nbsp;e.trim().length)&nbsp;{<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;<span>var</span>&nbsp;t&nbsp;=&nbsp;js_beautify(e,&nbsp;{<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indent_size:&nbsp;4, // <- Changed here.<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indent_char:&nbsp;'&nbsp;'<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;});<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;'actionscript'&nbsp;==&nbsp;viewname&nbsp;?&nbsp;setOutputMsg('Beautify&nbsp;Action&nbsp;Script')&nbsp;:<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;'csharpviewer'&nbsp;==&nbsp;viewname&nbsp;?&nbsp;(setOutputMsg('Beautify&nbsp;C#'),&nbsp;t&nbsp;=&nbsp;(t&nbsp;=&nbsp;t.split('=&nbsp;&gt;').<span>join</span>('=&gt;')).split('&gt;&nbsp;=').<span>join</span>('&gt;='))&nbsp;:<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;'javaviewer'&nbsp;==&nbsp;viewname&nbsp;?&nbsp;(setOutputMsg('Beautify&nbsp;Java'),&nbsp;t&nbsp;=&nbsp;t.split('-&nbsp;&gt;').<span>join</span>('-&gt;'))&nbsp;:<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;'jsviewer'&nbsp;==&nbsp;viewname&nbsp;&amp;&amp;&nbsp;(setOutputMsg('Beautify&nbsp;Javascript'),&nbsp;$('#resultDiv1').hide()),<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;editorResult.setValue(t)<br />
-      &nbsp;&nbsp;}<br />
-      }<span style="display: none"><br />
-    }}</span></code>
-    <p>Beautify your C# code.</p>
-    <p>2. Paste the beautified code to the <a href="http://csharpindepth.com/CodeFormatterTool.aspx">http://csharpindepth.com/CodeFormatterTool.aspx</a> or <a href="https://tohtml.com/">https://tohtml.com/</a>.</p>
-    <p>3. Save the result html here.</p>
-  </div>
-
   <div class="row" *ngIf="editing || adding">
     <p>Title:</p>
     <textarea id="title"       class="editing-textarea"></textarea>
@@ -44,21 +17,21 @@
   <div class="input-group" *ngIf="searching">
     <input disabled type="text" class="form-control" placeholder="Search for...">
     <span class="input-group-btn">
-      <button class="btn btn-default" (click)="searching=false;">&times;</button>
       <button disabled class="btn btn-search" type="button"><i class="fa fa-search fa-fw"></i> Search</button>
+      <button class="btn btn-default" (click)="searching=false;">&times;</button>
     </span>
   </div>
 
 <div class="row" *ngIf="!exportImport">
+  <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
   <div *ngIf="!editing && !adding" class="my-2" style="display: inline-block; float: left;">
     <button class="btn btn-success mr-1" (click)="toggleAdding()">Add</button>
     <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
   </div>
   <div class="my-2" style="display: inline-block;">
     <button class="btn btn-success mr-1" *ngIf="!searching" (click)="search()"><span class="glyphicon glyphicon-search"></span></button>
-    <button class="btn btn-success mr-1" *ngIf="!showHelp" (click)="toggleHelp()">Help</button>
+    <a class="btn btn-success mr-1" href="https://github.com/Roman-Tarasiuk/Notes/wiki">Help</a>
     <button class="btn btn-success mr-1" (click)="exportImport=true">Export/Import</button>
-    <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
   </div>
 </div>
 

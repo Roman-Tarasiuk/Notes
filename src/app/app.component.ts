@@ -5,6 +5,7 @@ import { NotesService } from './core/notes.service';
 
 import { DomSanitizer } from '@angular/platform-browser'
 import { PipeTransform, Pipe } from "@angular/core";
+import { FilterPipe }from './core/filter.pipe';
 
 // https://stackoverflow.com/questions/39628007/angular2-innerhtml-binding-remove-style-attribute
 // https://medium.com/@ahmedhamedTN/make-styles-work-when-dealing-with-innerhtml-in-angular-ac2d524ba001
@@ -31,6 +32,7 @@ export class AppComponent {
   updated: boolean = false;
   exportImport: boolean = false;
   notesService: NotesService;
+  filterString: string = '';
 
   titleEl: HTMLInputElement;
   descriptionEl: HTMLInputElement;
@@ -114,12 +116,9 @@ export class AppComponent {
     this.textEl = document.getElementById('text') as HTMLInputElement;
   }
 
-  search() {
+  toggleSearch() {
     if (!this.searching) {
       this.searching = true;
-    }
-    else {
-
     }
   }
 

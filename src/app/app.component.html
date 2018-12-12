@@ -15,9 +15,8 @@
 
   <!--https://codepen.io/brandonhimpfen/pen/BoExzV-->
   <div class="input-group" *ngIf="searching">
-    <input disabled type="text" class="form-control" placeholder="Search for...">
+    <input id="srchString" type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search for...">
     <span class="input-group-btn">
-      <button disabled class="btn btn-search" type="button"><i class="fa fa-search fa-fw"></i> Search</button>
       <button class="btn btn-default" (click)="searching=false;">&times;</button>
     </span>
   </div>
@@ -29,7 +28,7 @@
     <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
   </div>
   <div class="my-2" style="display: inline-block;">
-    <button class="btn btn-success mr-1" *ngIf="!searching" (click)="search()"><span class="glyphicon glyphicon-search"></span></button>
+    <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearch()"><span class="glyphicon glyphicon-search"></span></button>
     <a class="btn btn-success mr-1" href="https://github.com/Roman-Tarasiuk/Notes/wiki">Help</a>
     <button class="btn btn-success mr-1" (click)="exportImport=true">Export/Import</button>
   </div>
@@ -58,7 +57,7 @@
           </div>
           <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
-              <li *ngFor="let n of notes" (click)="clicked(n)" [class.active]="isActive(n)">
+              <li *ngFor="let n of notes | filter : searchText" (click)="clicked(n)" [class.active]="isActive(n)">
                 <a href="#" class="note">
                   <h4 class="note-title">{{n.title}}</h4>
                   <div class="note-description">{{n.description}}</div>

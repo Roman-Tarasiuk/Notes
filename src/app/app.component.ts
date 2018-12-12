@@ -91,7 +91,9 @@ export class AppComponent {
   addNote() {
     this.initEditorControls();
 
-    this.notes.push(new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value));
+    var newNode = new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value);
+    this.notes.push(newNode);
+    this.current = newNode;
 
     this.titleEl.value = '';
     this.descriptionEl.value = '';

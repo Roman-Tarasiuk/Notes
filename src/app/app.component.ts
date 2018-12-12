@@ -133,6 +133,13 @@ export class AppComponent {
     if (index >= 0) {
       this.notes.splice(index, 1);
       this.updated = true;
+
+      if (this.notes.length > 0) {
+        if (index >= this.notes.length) {
+          index = this.notes.length - 1;
+        }
+        this.current = this.notes[index];
+      }
     }
   }
 

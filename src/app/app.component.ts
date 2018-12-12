@@ -25,7 +25,7 @@ export class SafeHtmlPipe implements PipeTransform  {
 })
 export class AppComponent {
   notes: Note[];
-  current: Note;
+  current: Note = null;
   editing: boolean = false;
   adding: boolean = false;
   searching: boolean = false;
@@ -42,7 +42,9 @@ export class AppComponent {
     this.notesService = notesService;
     this.notes = this.notesService.getNotes();
 
-    this.current = null;
+    if (this.notes.length > 0) {
+      this.current = this.notes[0];
+    }
   }
 
   clicked(n: Note) {
@@ -158,5 +160,6 @@ export class AppComponent {
     var expImpEl: HTMLInputElement = document.getElementById('expImp') as HTMLInputElement;
     this.notesService.saveNotesText(expImpEl.value);
     this.notes = this.notesService.getNotes(expImpEl.value);
+    this.updated = false;
   }
 }

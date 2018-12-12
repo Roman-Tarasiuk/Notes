@@ -14,7 +14,7 @@ export class FilterPipe implements PipeTransform {
     searchText = searchText.toLowerCase();
 
     return items.filter( it => {
-        return it.text.toLowerCase().includes(searchText)
+        return it.title.toLowerCase().includes(searchText)
             || it.description.toLowerCase().includes(searchText)
             || it.text.toLowerCase().includes(searchText);
         });

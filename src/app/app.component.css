@@ -145,4 +145,9 @@
     color: red
   }
 
+  /* */
+  .edit-warning.updated {
+    background-color:  #ffdab3;
+    padding: 0 15px;
+  }
 }

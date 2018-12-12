@@ -22,19 +22,19 @@
     </span>
   </div>
 
-  <div class="row" *ngIf="!exportImport">
-  <div class="my-2" style="display: inline-block; float: left;">
-    <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
+  <div class="row edit-warning" *ngIf="!exportImport" [class.updated]="updated">
+    <div class="my-2" style="display: inline-block; float: left;">
+      <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
+    </div>
+    <div *ngIf="!editing && !adding" class="my-2" style="display: inline-block; float: left;">
+      <button class="btn btn-success mr-1" (click)="toggleAdding()">Add</button>
+      <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
+    </div>
+    <div class="my-2" style="display: inline-block;">
+      <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearch()"><span class="glyphicon glyphicon-search"></span></button>
+      <button class="btn btn-success mr-1" (click)="exportImport=true">Export/Import</button>
+    </div>
   </div>
-  <div *ngIf="!editing && !adding" class="my-2" style="display: inline-block; float: left;">
-    <button class="btn btn-success mr-1" (click)="toggleAdding()">Add</button>
-    <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
-  </div>
-  <div class="my-2" style="display: inline-block;">
-    <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearch()"><span class="glyphicon glyphicon-search"></span></button>
-    <button class="btn btn-success mr-1" (click)="exportImport=true">Export/Import</button>
-  </div>
-</div>
 
 <div *ngIf="exportImport" class="row">
   <textarea id="expImp" class="editing-textarea"></textarea>

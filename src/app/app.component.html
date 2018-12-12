@@ -15,11 +15,13 @@
   </div>
 
   <!--https://codepen.io/brandonhimpfen/pen/BoExzV-->
-  <div class="input-group" *ngIf="searching">
-    <input id="srchString" type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search for...">
-    <span class="input-group-btn">
-      <button class="btn btn-default" (click)="searching=false;">&times;</button>
-    </span>
+  <div class="row" *ngIf="searching">
+    <div class="input-group" style="width: 100%;">
+      <input id="srchString" type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" (click)="searching=false;">&times;</button>
+      </span>
+    </div>
   </div>
 
   <div class="row edit-warning" *ngIf="!exportImport" [class.updated]="updated">

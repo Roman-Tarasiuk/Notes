@@ -19,13 +19,16 @@
 
   .scrolling {
       overflow: auto;
-      max-height: calc(100vh - 51px);
+      max-height: calc(100vh - 59px);
   }
   .editing-textarea {
       width: 100%;
   }
   .note {
     padding: 0 0 0 5px;
+  }
+  .edit-warning.updated {
+    background-color:  #ffdab3;
   }
   .mt-1,
   .my-1 {
@@ -35,9 +38,29 @@
   .mx-1 {
     margin-right: 0.25rem !important;
   }
+  .mb-1,
+  .my-1 {
+    margin-bottom: 0.25rem !important;
+  }
+  .ml-1,
+  .mx-1 {
+    margin-left: 0.25rem !important;
+  }
   .mt-2,
   .my-2 {
     margin-top: 0.5rem !important;
+  }
+  .mr-2,
+  .mx-2 {
+    margin-right: 0.5rem !important;
+  }
+  .mb-2,
+  .my-2 {
+    margin-bottom: 0.5rem !important;
+  }
+  .ml-2,
+  .mx-2 {
+    margin-left: 0.5rem !important;
   }
   .note-title {
     margin: 0;
@@ -45,6 +68,30 @@
   .note-description {
     color: #aaa;
   }
+  .list-item {
+    border-bottom: 1px solid #ccc;
+  }
+  .wordwrap { 
+    white-space: pre-wrap;      /* CSS3 */   
+    white-space: -moz-pre-wrap; /* Firefox */    
+    white-space: -pre-wrap;     /* Opera <7 */   
+    white-space: -o-pre-wrap;   /* Opera 7 */    
+    word-wrap: break-word;      /* IE */
+ }
+ .navbar-default .navbar-nav > .active > div,
+ .navbar-default .navbar-nav > .active > div:hover,
+ .navbar-default .navbar-nav > .active > div:focus {
+   color: #555;
+   background-color: #e7e7e7;
+   padding-top: 10px;
+   padding-bottom: 10px;
+ }
+ .navbar-default .navbar-nav > li > div,
+ .navbar-default .navbar-nav > li > div:hover,
+ .navbar-default .navbar-nav > li > div:focus {
+   padding-top: 10px;
+   padding-bottom: 10px;
+ }
 
   /*https://codepen.io/brandonhimpfen/pen/BoExzV*/
   .btn-search {
@@ -143,11 +190,5 @@
   }
   :host ::ng-deep span.Entity {
     color: red
-  }
-
-  /* */
-  .edit-warning.updated {
-    background-color:  #ffdab3;
-    padding: 0 15px;
   }
 }

@@ -162,4 +162,30 @@ export class AppComponent {
     this.notes = this.notesService.getNotes(expImpEl.value);
     this.updated = false;
   }
+
+  moveUp(n: Note) {
+    var index = this.notes.indexOf(n);
+
+    if (index == 0) {
+      return;
+    }
+
+    this.notes.splice(index, 1);
+    this.notes.splice(index - 1, 0, n);
+
+    this.updated = true;
+  }
+
+  moveDown(n: Note) {
+    var index = this.notes.indexOf(n);
+
+    if (index == this.notes.length - 1) {
+      return;
+    }
+
+    this.notes.splice(index, 1);
+    this.notes.splice(index + 1, 0, n);
+
+    this.updated = true;
+  }
 }

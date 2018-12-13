@@ -1,19 +1,39 @@
 <div class="container my-2">
   <a href="https://github.com/Roman-Tarasiuk/Notes/wiki" style="float: right">Help</a>
-  <div class="row" *ngIf="editing || adding">
-    <p>Title:</p>
-    <textarea id="title"       class="editing-textarea"></textarea>
-    <p>Description:</p>
-    <textarea id="description" class="editing-textarea"></textarea>
-    <p>Text:</p>
-    <textarea id="text"        class="editing-textarea"></textarea>
 
-    <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
-    <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
-    <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
-    <button class="btn btn-info" (click)="cancelModification()">Close</button>
+  <!-- Main menu buttons. -->
+  <div class="row edit-warning" *ngIf="!exportImport" [class.updated]="updated">
+      <div class="my-2" style="display: inline-block; float: left;">
+        <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
+      </div>
+      <div *ngIf="!editing && !adding" class="my-2" style="display: inline-block; float: left;">
+        <button class="btn btn-success mr-1" (click)="toggleAdding()">Add</button>
+        <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
+      </div>
+      <div class="my-2" style="display: inline-block;">
+        <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearch()"><span class="glyphicon glyphicon-search"></span></button>
+        <button class="btn btn-success mr-1" (click)="exportImport=true">Export / Import</button>
+      </div>
+    </div>
+    
+  <!-- Add / Edit. -->
+  <div class="row" *ngIf="editing || adding">
+    <div>
+      <p>Title:</p>
+      <textarea id="title"       class="editing-textarea"></textarea>
+      <p>Description:</p>
+      <textarea id="description" class="editing-textarea"></textarea>
+      <p>Text:</p>
+      <textarea id="text"        class="editing-textarea"></textarea>
+
+      <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
+      <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
+      <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
+      <button class="btn btn-info" (click)="cancelModification()">Close</button>
+    </div>
   </div>
 
+  <!-- Searching. -->
   <!--https://codepen.io/brandonhimpfen/pen/BoExzV-->
   <div class="row" *ngIf="searching">
     <div class="input-group" style="width: 100%;">
@@ -24,29 +44,17 @@
     </div>
   </div>
 
-  <div class="row edit-warning" *ngIf="!exportImport" [class.updated]="updated">
-    <div class="my-2" style="display: inline-block; float: left;">
-      <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
-    </div>
-    <div *ngIf="!editing && !adding" class="my-2" style="display: inline-block; float: left;">
-      <button class="btn btn-success mr-1" (click)="toggleAdding()">Add</button>
-      <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
-    </div>
-    <div class="my-2" style="display: inline-block;">
-      <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearch()"><span class="glyphicon glyphicon-search"></span></button>
-      <button class="btn btn-success mr-1" (click)="exportImport=true">Export / Import</button>
-    </div>
+  <!-- Export / Import. -->
+  <div *ngIf="exportImport" class="row">
+    <textarea id="expImp" class="editing-textarea"></textarea>
+    <button class="btn btn-warning mr-1" (click)="exportNotes()">Export</button>
+    <button class="btn btn-warning mr-1" (click)="importNotes()">Import</button>
+    <button class="btn btn-info" (click)="exportImport=false;">Close</button>
   </div>
 
-<div *ngIf="exportImport" class="row">
-  <textarea id="expImp" class="editing-textarea"></textarea>
-  <button class="btn btn-warning mr-1" (click)="exportNotes()">Export</button>
-  <button class="btn btn-warning mr-1" (click)="importNotes()">Import</button>
-  <button class="btn btn-info" (click)="exportImport=false;">Close</button>
-</div>
-
-<!-- https://codepen.io/mikeair/pen/Kfyin -->
-<div class="row mt-2">
+  <!-- Notes list and view. -->
+  <!-- https://codepen.io/mikeair/pen/Kfyin -->
+  <div class="row mt-2">
     <div class="col-sm-3 scrolling">
       <div class="sidebar-nav">
         <div class="navbar navbar-default" role="navigation">
@@ -61,11 +69,18 @@
           </div>
           <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
-              <li *ngFor="let n of notes | filter : searchText" (click)="clicked(n)" [class.active]="isActive(n)">
-                <a href="#" class="note">
+              <li *ngFor="let n of notes | filter : searchText" (click)="clicked(n)" [class.active]="isActive(n)"
+                  class="list-item">
+                <div class="note">
                   <h4 class="note-title">{{n.title}}</h4>
-                  <div class="note-description">{{n.description}}</div>
-                </a>
+                  <div class="note-description wordwrap">
+                    {{n.description}}
+                    <div style="float: right; margin-top: -3px;" *ngIf="isActive(n)">
+                      <button class="btn btn-xs mr-1" (click)="moveUp(n)"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                      <button class="btn btn-xs mr-1" (click)="moveDown(n)"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
           </div><!--/.nav-collapse -->

@@ -120,12 +120,6 @@ export class AppComponent {
     this.textEl = document.getElementById('text') as HTMLInputElement;
   }
 
-  toggleSearch() {
-    if (!this.searching) {
-      this.searching = true;
-    }
-  }
-
   saveChanges() {
     this.notesService.saveNotes(this.notes);
     this.updated = false;

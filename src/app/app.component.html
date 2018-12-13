@@ -11,7 +11,7 @@
         <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
       </div>
       <div class="my-2" style="display: inline-block;">
-        <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearch()"><span class="glyphicon glyphicon-search"></span></button>
+        <button class="btn btn-success mr-1" *ngIf="!searching" (click)="searching = !searching;"><span class="glyphicon glyphicon-search"></span></button>
         <button class="btn btn-success mr-1" (click)="exportImport=true">Export / Import</button>
       </div>
     </div>
@@ -37,9 +37,13 @@
   <!--https://codepen.io/brandonhimpfen/pen/BoExzV-->
   <div class="row" *ngIf="searching">
     <div class="input-group" style="width: 100%;">
-      <input id="srchString" type="text" [(ngModel)]="searchText" class="form-control" placeholder="Search for...">
+      <input id="srchString"
+              type="text"
+              [(ngModel)]="searchText"
+              class="form-control"
+              placeholder="Search for...">
       <span class="input-group-btn">
-        <button class="btn btn-default" (click)="searching=false;">&times;</button>
+        <button class="btn btn-default" (click)="searching = !searching; searchText=''">&times;</button>
       </span>
     </div>
   </div>

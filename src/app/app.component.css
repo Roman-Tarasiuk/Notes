@@ -149,6 +149,8 @@
     border-bottom: white 2px ridge; 
     font-family: courier new; 
     background-color: #e5e5e5;
+    display: inline-block;
+    min-width: 100%;
   }
   /* For code snippets */
   :host ::ng-deep span.Keyword,

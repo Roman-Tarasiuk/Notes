@@ -33,6 +33,9 @@ export class AppComponent {
   exportImport: boolean = false;
   notesService: NotesService;
   filterString: string = '';
+  searchInTitle: boolean = true;
+  searchInDescription: boolean = true;
+  searchInText: boolean = true;
 
   titleEl: HTMLInputElement;
   descriptionEl: HTMLInputElement;

@@ -77,21 +77,25 @@
     white-space: -pre-wrap;     /* Opera <7 */   
     white-space: -o-pre-wrap;   /* Opera 7 */    
     word-wrap: break-word;      /* IE */
- }
- .navbar-default .navbar-nav > .active > div,
- .navbar-default .navbar-nav > .active > div:hover,
- .navbar-default .navbar-nav > .active > div:focus {
-   color: #555;
-   background-color: #e7e7e7;
-   padding-top: 10px;
-   padding-bottom: 10px;
- }
- .navbar-default .navbar-nav > li > div,
- .navbar-default .navbar-nav > li > div:hover,
- .navbar-default .navbar-nav > li > div:focus {
-   padding-top: 10px;
-   padding-bottom: 10px;
- }
+  }
+  .navbar-default .navbar-nav > .active > div,
+  .navbar-default .navbar-nav > .active > div:hover,
+  .navbar-default .navbar-nav > .active > div:focus {
+    color: #555;
+    background-color: #e7e7e7;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .navbar-default .navbar-nav > li > div,
+  .navbar-default .navbar-nav > li > div:hover,
+  .navbar-default .navbar-nav > li > div:focus {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .searchOption {
+    margin-left: 5px;
+    font-weight: normal;
+  }
 
   /*https://codepen.io/brandonhimpfen/pen/BoExzV*/
   .btn-search {

@@ -46,6 +46,12 @@
         <button class="btn btn-default" (click)="searching = !searching; searchText=''">&times;</button>
       </span>
     </div>
+    <div>
+      Search in:
+      <label class="searchOption"><input type="checkbox" checked [(ngModel)]="searchInTitle"> title</label>
+      <label class="searchOption"><input type="checkbox" checked [(ngModel)]="searchInDescription"> description</label>
+      <label class="searchOption"><input type="checkbox" checked [(ngModel)]="searchInText"> text</label>
+    </div>
   </div>
 
   <!-- Export / Import. -->
@@ -73,7 +79,9 @@
           </div>
           <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
-              <li *ngFor="let n of notes | filter : searchText" (click)="clicked(n)" [class.active]="isActive(n)"
+              <li *ngFor="let n of notes | filter : searchText : { inTitle: searchInTitle, inDescription: searchInDescription, inText: searchInText}" 
+                  (click)="clicked(n)"
+                  [class.active]="isActive(n)"
                   class="list-item">
                 <div class="note">
                   <h4 class="note-title">{{n.title}}</h4>

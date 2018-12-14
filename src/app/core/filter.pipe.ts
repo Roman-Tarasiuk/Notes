@@ -7,16 +7,16 @@ import { Note } from './note';
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-  transform(items: Note[], searchText: string): Note[] {
+  transform(items: Note[], searchText: string, searchParams: any): Note[] {
     if(!items) return [];
     if(!searchText) return items;
 
     searchText = searchText.toLowerCase();
 
     return items.filter( it => {
-        return it.title.toLowerCase().includes(searchText)
-            || it.description.toLowerCase().includes(searchText)
-            || it.text.toLowerCase().includes(searchText);
+        return (searchParams.inTitle && it.title.toLowerCase().includes(searchText))
+            || (searchParams.inDescription && it.description.toLowerCase().includes(searchText))
+            || (searchParams.inText && it.text.toLowerCase().includes(searchText));
         });
     }
 }

@@ -22,7 +22,6 @@ export class NotesService {
     }
 
     if (notes != null && notes != '' && notes != undefined) {
-        console.log(notes);
         return JSON.parse(notes);
     }
     return [];

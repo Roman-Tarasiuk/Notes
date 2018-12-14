@@ -18,20 +18,20 @@
     
   <!-- Add / Edit. -->
   <div class="row" *ngIf="editing || adding">
-    <div>
-      <p>Title:</p>
-      <textarea id="title"       class="editing-textarea"></textarea>
-      <p>Description:</p>
-      <textarea id="description" class="editing-textarea"></textarea>
-      <p>Text:</p>
-      <textarea id="text"        class="editing-textarea"></textarea>
+    <div class="my-2">
+      <label>Title:</label>
+      <textarea id="title"       class="form-control" rows="1"></textarea>
+      <label>Description:</label>
+      <textarea id="description" class="form-control" rows="1"></textarea>
+      <label>Text:</label>
+      <textarea id="text"        class="form-control" rows="5"></textarea>
 
-      <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
-      <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
-      <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
-      <button class="btn btn-info" (click)="cancelModification()">Close</button>
     </div>
-  </div>
+    <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
+    <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
+    <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
+    <button class="btn btn-info" (click)="cancelModification()">Close</button>
+</div>
 
   <!-- Searching. -->
   <!--https://codepen.io/brandonhimpfen/pen/BoExzV-->
@@ -56,15 +56,13 @@
 
   <!-- Export / Import. -->
   <div *ngIf="exportImport" class="row my-2">
-    <!--textarea id="expImp" class="editing-textarea"></textarea-->
     <button class="btn btn-warning mr-1" (click)="exportNotes()">Export</button>
-    <!--button class="btn btn-warning mr-1" (click)="importNotes()">Import</button-->
     <label class="btn btn-warning mr-1">
-    Import
-    <input type="file"
-        accept="text/plain"
-        (change)="importNotes($event)"
-        style="display: none">
+      Import
+      <input type="file"
+          accept="text/plain"
+          (change)="importNotes($event)"
+          style="display: none">
     </label>
     <button class="btn btn-info" (click)="exportImport=false;">Close</button>
   </div>

@@ -137,15 +137,15 @@ export class AppComponent {
   }
 
   exportNotes() {
-    var expImpEl: HTMLInputElement = document.getElementById('expImp') as HTMLInputElement;
-    expImpEl.value = this.notesService.getNotesPlainText();
+    this.notesService.saveNotesToFile(this.notes);
   }
 
-  importNotes() {
-    var expImpEl: HTMLInputElement = document.getElementById('expImp') as HTMLInputElement;
-    this.notesService.saveNotesText(expImpEl.value);
-    this.notes = this.notesService.getNotes(expImpEl.value);
-    this.updated = false;
+  async importNotes(event) {
+    var notesText = await this.notesService.openFile(event) as string;
+    this.notes = this.notesService.getNotes(notesText);
+    if (this.notes.length > 0) {
+      this.current = this.notes[0];
+    }
   }
 
   moveUp(n: Note) {

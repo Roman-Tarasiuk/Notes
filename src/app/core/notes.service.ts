@@ -80,5 +80,5 @@ export class NotesService {
             window.URL.revokeObjectURL(url);  
         }, 0); 
     }
-}
+  }
 }

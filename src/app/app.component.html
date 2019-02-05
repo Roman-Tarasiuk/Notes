@@ -15,19 +15,21 @@
         <button class="btn btn-success mr-1" (click)="exportImport=true">Export / Import</button>
       </div>
     </div>
-    
+
   <!-- Add / Edit. -->
   <div class="row" *ngIf="editing || adding">
     <div class="my-2">
       <label>Title:</label>
-      <textarea id="title"       class="form-control" rows="1"></textarea>
+      <textarea id="title"       class="form-control" rows="1" [(ngModel)]="current.title"></textarea>
       <label>Description:</label>
-      <textarea id="description" class="form-control" rows="1"></textarea>
+      <textarea id="description" class="form-control" rows="1" [(ngModel)]="current.description"></textarea>
       <label>Text:</label>
-      <textarea id="text"        class="form-control" rows="5"></textarea>
+      <textarea id="text"        class="form-control" rows="5" [(ngModel)]="current.text"></textarea>
 
     </div>
     <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
+    <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="beautify()">Beautify</button>
+    <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="codeTemplate()">Code template</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
     <button class="btn btn-info" (click)="cancelModification()">Close</button>
@@ -84,7 +86,7 @@
           </div>
           <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
-              <li *ngFor="let n of notes | filter : searchText : { inTitle: searchInTitle, inDescription: searchInDescription, inText: searchInText}" 
+              <li *ngFor="let n of notes | filter : searchText : { inTitle: searchInTitle, inDescription: searchInDescription, inText: searchInText}"
                   (click)="clicked(n)"
                   [class.active]="isActive(n)"
                   class="list-item">

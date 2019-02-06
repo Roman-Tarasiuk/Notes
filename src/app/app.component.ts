@@ -29,7 +29,7 @@ export class AppComponent {
   searchInTitle: boolean = true;
   searchInDescription: boolean = true;
   searchInText: boolean = true;
-  readonly snippetStart: string = '<pre><code class="csharp">';
+  readonly snippetStart: string = '<pre><code class="csharp hljs">';
   readonly snippetEnd: string = '</code></pre>';
 
   titleEl: HTMLInputElement;
@@ -51,7 +51,7 @@ export class AppComponent {
   formatOutput(text: string): string {
    var tmpStart = '===pre===code class="csharp"===';
    var tmpEnd = '===/code===/pre===';
-   
+
    var reStart1 = new RegExp(this.snippetStart, 'g');
    var reEnd1 = new RegExp(this.snippetEnd, 'g');
 

@@ -67,7 +67,7 @@ export class AppComponent {
                .replace(reLt, '&lt;')
                .replace(reGt, '&gt')
                .replace(reStart2, this.snippetStart)
-               .replace(reEnd2, this.snippetEnd)
+               .replace(reEnd2, this.snippetEnd);
 
    return result;
   }

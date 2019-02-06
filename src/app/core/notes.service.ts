@@ -51,7 +51,6 @@ export class NotesService {
       // Wait till complete
       reader.onloadend = function(e: any) {
         content = e.target.result;
-        that.saveNotesText(content);
         resolve(content);
       };
       

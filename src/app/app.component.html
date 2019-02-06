@@ -29,6 +29,7 @@
     </div>
     <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
     <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="beautify()">Beautify</button>
+    <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="highlightCode()">Highlight</button>
     <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="codeTemplate()">Code template</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
@@ -107,7 +108,7 @@
       </div>
     </div>
     <div class="col-sm-9 scrolling">
-      <div *ngIf="current" [innerHTML]="current.text | safeHtml">
+      <div *ngIf="current" [innerHTML]="formatOutput(current.text) | safeHtml">
       </div>
     </div>
   </div>

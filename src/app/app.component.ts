@@ -42,9 +42,34 @@ export class AppComponent {
 
     if (this.notes.length > 0) {
       this.current = this.notes[0];
+      this.highlightCode();
     }
 
     hljs.registerLanguage('cs', cs);
+  }
+
+  formatOutput(text: string): string {
+   var tmpStart = '===pre===code class="csharp"===';
+   var tmpEnd = '===/code===/pre===';
+   
+   var reStart1 = new RegExp(this.snippetStart, 'g');
+   var reEnd1 = new RegExp(this.snippetEnd, 'g');
+
+   var reStart2 = new RegExp(tmpStart, 'g');
+   var reEnd2 = new RegExp(tmpEnd, 'g');
+
+   var reLt = /</g;
+   var reGt = />/g;
+
+   var result = text
+               .replace(reStart1, tmpStart)
+               .replace(reEnd1, tmpEnd)
+               .replace(reLt, '&lt;')
+               .replace(reGt, '&gt')
+               .replace(reStart2, this.snippetStart)
+               .replace(reEnd2, this.snippetEnd)
+
+   return result;
   }
 
   highlightCode() {
@@ -70,7 +95,7 @@ export class AppComponent {
     const selStart = this.textEl.selectionStart;
     const selEnd = this.textEl.selectionEnd;
 
-    this.textEl.value = this.textEl.value.substr(0, selStart)
+    this.current.text = this.textEl.value.substr(0, selStart)
       + this.snippetStart
       + this.textEl.value.substr(selStart, selEnd - selStart)
       + this.snippetEnd
@@ -83,8 +108,10 @@ export class AppComponent {
     const selStart = this.textEl.selectionStart;
     const selEnd = this.textEl.selectionEnd;
 
-    this.textEl.value = this.textEl.value.substr(0, selStart)
-      + js_beautify(this.textEl.value.substr(selStart, selEnd - selStart))
+    this.current.text = this.textEl.value.substr(0, selStart)
+      + js_beautify(this.textEl.value.substr(selStart, selEnd - selStart), {
+        'brace_style': 'expand'
+      })
       + this.textEl.value.substr(selEnd);
   }
 
@@ -116,8 +143,8 @@ export class AppComponent {
     }
 
     this.adding = !this.adding;
-    if (this.adding) {
-      this.current = null;
+    if (this.adding == true) {
+      this.current = new Note('', '', '');
     }
   }
 
@@ -194,6 +221,8 @@ export class AppComponent {
     this.notes = this.notesService.getNotes(notesText);
     if (this.notes.length > 0) {
       this.current = this.notes[0];
+      this.updated = true;
+      this.highlightCode();
     }
   }
 

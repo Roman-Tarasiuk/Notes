@@ -59,9 +59,9 @@
 
   <!-- Export / Import. -->
   <div *ngIf="exportImport" class="row my-2">
-    <button class="btn btn-warning mr-1" (click)="exportNotes()">Export</button>
+    <button class="btn btn-warning mr-1" (click)="exportNotes()">Export to</button>
     <label class="btn btn-warning mr-1">
-      Import
+      Import from
       <input type="file"
           accept="text/plain"
           (change)="importNotes($event)"

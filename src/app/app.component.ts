@@ -67,7 +67,9 @@ export class AppComponent {
                .replace(reLt, '&lt;')
                .replace(reGt, '&gt')
                .replace(reStart2, this.snippetStart)
-               .replace(reEnd2, this.snippetEnd);
+               .replace(reEnd2, this.snippetEnd)
+               .replace(new RegExp(this.snippetStart + '\r*\n', 'g'), this.snippetStart)
+               .replace(new RegExp('\r*\n' + this.snippetEnd, 'g'), this.snippetEnd);
 
    return result;
   }

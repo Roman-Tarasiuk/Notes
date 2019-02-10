@@ -2,30 +2,29 @@
   <a href="https://github.com/Roman-Tarasiuk/Notes/wiki" style="float: right">Help</a>
 
   <!-- Main menu buttons. -->
-  <div class="row edit-warning my-2" *ngIf="!exportImport" [class.updated]="updated">
-      <div style="display: inline-block; float: left;">
-        <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
-      </div>
-      <div *ngIf="!editing && !adding" style="display: inline-block; float: left;">
-        <button class="btn btn-success mr-1" (click)="toggleAdding()">New</button>
-        <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
-      </div>
-      <div style="display: inline-block;">
-        <button class="btn btn-success mr-1" *ngIf="!searching" (click)="searching = !searching;"><span class="glyphicon glyphicon-search"></span></button>
-        <button class="btn btn-success mr-1" (click)="exportImport=true">Export / Import</button>
-      </div>
+  <div id="mainMenuRow" class="row edit-warning my-2" *ngIf="!exportImport && !editing && !adding" [class.updated]="updated">
+    <div style="display: inline-block; float: left;">
+      <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
     </div>
+    <div *ngIf="!editing && !adding" style="display: inline-block; float: left;">
+      <button class="btn btn-success mr-1" (click)="toggleAdding()">New</button>
+      <button class="btn btn-success mr-1"(click)="toggleEditing()">Edit</button>
+    </div>
+    <div style="display: inline-block;">
+      <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearching()"><span class="glyphicon glyphicon-search"></span></button>
+      <button class="btn btn-success mr-1" (click)="toggleExpImp()">Export / Import</button>
+    </div>
+  </div>
 
   <!-- Add / Edit. -->
-  <div class="row" *ngIf="editing || adding">
+  <div id="editingRow" class="row" *ngIf="editing || adding">
     <div class="my-2">
       <label>Title:</label>
-      <textarea id="title"       class="form-control" rows="1" [(ngModel)]="current.title"></textarea>
+      <textarea id="title"       class="form-control" rows="1"></textarea>
       <label>Description:</label>
-      <textarea id="description" class="form-control" rows="1" [(ngModel)]="current.description"></textarea>
+      <textarea id="description" class="form-control" rows="1"></textarea>
       <label>Text:</label>
-      <textarea id="text"        class="form-control" rows="5" [(ngModel)]="current.text"></textarea>
-
+      <textarea id="text"        class="form-control" rows="5"></textarea>
     </div>
     <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
     <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="codeTemplate()">Code template</button>
@@ -33,12 +32,13 @@
     <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="highlightCode()">Highlight</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
-    <button class="btn btn-info" (click)="cancelModification()">Close</button>
-</div>
+    <button class="btn btn-info mr-1" (click)="cancelModification()">Close</button>
+    <label><input type="checkbox" [(ngModel)]="shrinkHeight" (click)="adjustInfoHeight()">Shrink height</label>
+  </div>
 
   <!-- Searching. -->
   <!--https://codepen.io/brandonhimpfen/pen/BoExzV-->
-  <div class="row" *ngIf="searching">
+  <div id="searchingRow" class="row" *ngIf="searching">
     <div class="input-group" style="width: 100%;">
       <input id="srchString"
               type="text"
@@ -46,7 +46,7 @@
               class="form-control"
               placeholder="Search for...">
       <span class="input-group-btn">
-        <button class="btn btn-default" (click)="searching = !searching; searchText=''">&times;</button>
+        <button class="btn btn-default" (click)="toggleSearching(); searchText=''">&times;</button>
       </span>
     </div>
     <div>
@@ -58,7 +58,7 @@
   </div>
 
   <!-- Export / Import. -->
-  <div *ngIf="exportImport" class="row my-2">
+  <div id="expImpRow" *ngIf="exportImport" class="row my-2">
     <button class="btn btn-warning mr-1" (click)="exportNotes()">Export to</button>
     <label class="btn btn-warning mr-1">
       Import from
@@ -67,13 +67,13 @@
           (change)="importNotes($event)"
           style="display: none">
     </label>
-    <button class="btn btn-info" (click)="exportImport=false;">Close</button>
+    <button class="btn btn-info" (click)="toggleExpImp()">Close</button>
   </div>
 
   <!-- Notes list and view. -->
   <!-- https://codepen.io/mikeair/pen/Kfyin -->
-  <div class="row mt-2">
-    <div class="col-sm-3 scrolling">
+  <div id="infoRow" class="row mt-2">
+    <div class="col-sm-3 scrolling" style="height: 100%">
       <div class="sidebar-nav">
         <div class="navbar navbar-default" role="navigation">
           <div class="navbar-header">
@@ -107,7 +107,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-9 scrolling">
+    <div class="col-sm-9 scrolling" style="height: 100%">
       <div *ngIf="current" [innerHTML]="formatOutput(current.text) | safeHtml">
       </div>
     </div>

@@ -19,16 +19,22 @@ import cs from 'highlight.js/lib/languages/cs';
 export class AppComponent {
   notes: Note[];
   current: Note = null;
+  notesService: NotesService;
+
+  //
+
   editing: boolean = false;
   adding: boolean = false;
   searching: boolean = false;
   updated: boolean = false;
   exportImport: boolean = false;
-  notesService: NotesService;
   filterString: string = '';
   searchInTitle: boolean = true;
   searchInDescription: boolean = true;
   searchInText: boolean = true;
+  infoRowHeight: number = 0;
+  mainMenuHeight: number = 0;
+  shrinkHeight: boolean = true;
   readonly snippetStart: string = '<pre><code class="csharp hljs">';
   readonly snippetEnd: string = '</code></pre>';
 
@@ -44,6 +50,14 @@ export class AppComponent {
       this.current = this.notes[0];
       this.highlightCode();
     }
+
+    setTimeout(() => {
+      this.infoRowHeight = document.getElementById('infoRow').clientHeight;
+      var mainMenuRow = document.getElementById('mainMenuRow');
+      if (mainMenuRow) {
+        this.mainMenuHeight = mainMenuRow.clientHeight;
+      }
+    }, 500);
 
     hljs.registerLanguage('cs', cs);
   }
@@ -83,6 +97,10 @@ export class AppComponent {
   }
 
   clicked(n: Note) {
+    if (this.adding || this.editing) {
+      return;
+    }
+
     this.current = n;
     this.highlightCode();
   }
@@ -137,6 +155,8 @@ export class AppComponent {
       this.descriptionEl.value = this.current.description;
       this.textEl.value = this.current.text;
     }
+
+    this.adjustInfoHeight();
   }
 
   toggleAdding() {
@@ -148,11 +168,58 @@ export class AppComponent {
     if (this.adding == true) {
       this.current = new Note('', '', '');
     }
+
+    this.adjustInfoHeight();
+  }
+
+  toggleSearching() {
+    this.searching = !this.searching;
+
+    this.adjustInfoHeight();
+  }
+
+  toggleExpImp() {
+    this.exportImport = !this.exportImport;
+
+    this.adjustInfoHeight();
+  }
+
+  adjustInfoHeight() {
+    setTimeout(() => {
+      console.log('Info div initial height: ' + this.infoRowHeight);
+      if (!this.infoRowHeight) {
+        console.log('Exit adjustInfoHeight().');
+        return;
+      }
+
+      var resultHeight = this.infoRowHeight;
+
+      if (this.shrinkHeight) {
+        var editingRow = document.getElementById('editingRow');
+        if (editingRow) {
+          resultHeight = resultHeight - editingRow.clientHeight + this.mainMenuHeight;
+          console.log('Editing height: ' + editingRow.clientHeight);
+        }
+
+        var searchingRow = document.getElementById('searchingRow');
+        if (searchingRow) {
+          resultHeight -= searchingRow.clientHeight;
+          console.log('Searching height: ' + searchingRow.clientHeight);
+        }
+      }
+
+      //
+
+      var infoRow = document.getElementById('infoRow');
+      infoRow.style.height = resultHeight + 'px';
+    }, 300);
   }
 
   cancelModification() {
     this.editing = false;
     this.adding = false;
+
+    this.adjustInfoHeight();
   }
 
   addNote() {
@@ -169,6 +236,8 @@ export class AppComponent {
     this.highlightCode();
 
     this.updated = true;
+
+    // this.toggleAdding();
   }
 
   updateNote() {

@@ -12,7 +12,7 @@
     </div>
     <div style="display: inline-block;">
       <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearching()"><span class="glyphicon glyphicon-search"></span></button>
-      <button class="btn btn-success mr-1" (click)="toggleExpImp()">Export / Import</button>
+      <button class="btn btn-success mr-1" (click)="toggleExpImp()" [class.unsavedToStorage]="!saved">Export / Import</button>
     </div>
   </div>
 
@@ -33,7 +33,7 @@
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
     <button class="btn btn-info mr-1" (click)="cancelModification()">Close</button>
-    <label><input type="checkbox" [(ngModel)]="shrinkHeight" (click)="adjustInfoHeight()">Shrink height</label>
+    <label style="float: right;"><input type="checkbox" [(ngModel)]="shrinkHeight" (click)="adjustInfoHeight()">Shrink height</label>
   </div>
 
   <!-- Searching. -->
@@ -87,12 +87,12 @@
           </div>
           <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
-              <li *ngFor="let n of notes | filter : searchText : { inTitle: searchInTitle, inDescription: searchInDescription, inText: searchInText}"
+              <li *ngFor="let n of notes | filter : searchText : { inTitle: searchInTitle, inDescription: searchInDescription, inText: searchInText}; let i = index"
                   (click)="clicked(n)"
                   [class.active]="isActive(n)"
                   class="list-item">
-                <div class="note">
-                  <h4 class="note-title">{{n.title}}</h4>
+                <div class="note" (mousedown)="mousedown(i)" (mouseup)="mouseup()">
+                  <h4 class="note-title"><span class="index-num">[{{i + 1}}]</span> {{n.title}}</h4>
                   <div class="note-description wordwrap">
                     {{n.description}}
                     <div style="float: right; margin-top: -3px;" *ngIf="isActive(n)">

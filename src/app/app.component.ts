@@ -27,6 +27,7 @@ export class AppComponent {
   adding: boolean = false;
   searching: boolean = false;
   updated: boolean = false;
+  saved: boolead = true;
   exportImport: boolean = false;
   filterString: string = '';
   searchInTitle: boolean = true;
@@ -37,6 +38,7 @@ export class AppComponent {
   shrinkHeight: boolean = true;
   readonly snippetStart: string = '<pre><code class="csharp hljs">';
   readonly snippetEnd: string = '</code></pre>';
+  mouseIsDown: boolean = false;
 
   titleEl: HTMLInputElement;
   descriptionEl: HTMLInputElement;
@@ -97,12 +99,20 @@ export class AppComponent {
   }
 
   clicked(n: Note) {
-    if (this.adding || this.editing) {
+    if (this.adding) {
       return;
     }
 
     this.current = n;
     this.highlightCode();
+
+    if (this.editing) {
+      this.initEditorControls();
+
+      this.titleEl.value = this.current.title;
+      this.descriptionEl.value = this.current.description;
+      this.textEl.value = this.current.text;
+    }
   }
 
   sleep(ms) {
@@ -261,6 +271,7 @@ export class AppComponent {
   saveChanges() {
     this.notesService.saveNotes(this.notes);
     this.updated = false;
+    this.saved = false;
   }
 
   deleteNote() {
@@ -285,6 +296,7 @@ export class AppComponent {
 
   exportNotes() {
     this.notesService.saveNotesToFile(this.notes);
+    this.saved = true;
   }
 
   async importNotes(event) {
@@ -321,5 +333,40 @@ export class AppComponent {
     this.notes.splice(index + 1, 0, n);
 
     this.updated = true;
+  }
+
+  mousedown(i) {
+    this.mouseIsDown = true;
+
+    setTimeout(() => {
+      if (this.mouseIsDown) {
+        var indexStr = prompt('Move to index:');
+        if (indexStr == null) {
+          return;
+        }
+
+        var index = parseInt(indexStr, 10);
+        if (isNaN(index)) {
+          alert('Invalid index!');
+          return;
+        }
+
+        if (index < 0 || index >= (this.notes.length + 1)) {
+          alert('Index is out of range!');
+        }
+
+        var newIndex = index - 1;
+        if (newIndex != i) {
+          var tmp = this.notes.splice(i, 1);
+          this.notes.splice(newIndex, 0, tmp[0]);
+
+          this.updated = true;
+        }
+      }
+    }, 1000);
+  }
+
+  mouseup() {
+    this.mouseIsDown = false;
   }
 }

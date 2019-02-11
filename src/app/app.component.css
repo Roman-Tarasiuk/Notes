@@ -1,5 +1,9 @@
-/* make sidebar nav vertical */ 
+/* make sidebar nav vertical */
 @media (min-width: 768px) {
+  .unsavedToStorage {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+  }
   .sidebar-nav .navbar .navbar-collapse {
     padding: 0;
     max-height: none;
@@ -71,11 +75,11 @@
   .list-item {
     border-bottom: 1px solid #ccc;
   }
-  .wordwrap { 
-    white-space: pre-wrap;      /* CSS3 */   
-    white-space: -moz-pre-wrap; /* Firefox */    
-    white-space: -pre-wrap;     /* Opera <7 */   
-    white-space: -o-pre-wrap;   /* Opera 7 */    
+  .wordwrap {
+    white-space: pre-wrap;      /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap;     /* Opera <7 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
     word-wrap: break-word;      /* IE */
   }
   .navbar-default .navbar-nav > .active > div,
@@ -141,17 +145,17 @@
   }
   :host ::ng-deep div.code,
   :host ::ng-deep div.output {
-    border-right: white 2px ridge; 
-    padding-right: 10px; 
-    border-top: white 2px ridge; 
-    padding-left: 10px; 
-    font-size: 10pt; 
-    padding-bottom: 10px; 
+    border-right: white 2px ridge;
+    padding-right: 10px;
+    border-top: white 2px ridge;
+    padding-left: 10px;
+    font-size: 10pt;
+    padding-bottom: 10px;
     line-height: 1.1em;
-    border-left: white 2px ridge; 
-    padding-top: 10px; 
-    border-bottom: white 2px ridge; 
-    font-family: courier new; 
+    border-left: white 2px ridge;
+    padding-top: 10px;
+    border-bottom: white 2px ridge;
+    font-family: courier new;
     background-color: #e5e5e5;
     display: inline-block;
     min-width: 100%;

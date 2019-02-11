@@ -12,9 +12,13 @@ export class NotesService {
     return localStorage.getItem('myNotes');
   }
 
+  // Argument notesText is one of:
+  // - JSON object of notes;
+  // - empty string – to create empty notes list;
+  // - without parameters – to get notes saved in the local storage.
   getNotes(notesText?: string) : Note[] {
     var notes = null;
-    if (notesText) {
+    if (notesText != undefined) {
       notes = notesText;
     }
     else {
@@ -42,23 +46,23 @@ export class NotesService {
   async openFile(event) {
     var that = this;
     var file = event.target.files[0];
-    
+
     // https://stackoverflow.com/questions/51026420/filereader-readastext-async-issues
     return new Promise((resolve, reject) => {
       let content = '';
       const reader = new FileReader();
-      
+
       // Wait till complete
       reader.onloadend = function(e: any) {
         content = e.target.result;
         resolve(content);
       };
-      
+
       // Make sure to handle error states
       reader.onerror = function(e: any) {
         reject(e);
       };
-      
+
       reader.readAsText(file);
     });
   }
@@ -76,8 +80,8 @@ export class NotesService {
         a.click();
         setTimeout(function() {
             document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
+            window.URL.revokeObjectURL(url);
+        }, 0);
     }
   }
 }

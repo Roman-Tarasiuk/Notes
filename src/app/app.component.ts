@@ -28,7 +28,7 @@ export class AppComponent {
   searching: boolean = false;
   updated: boolean = false;
   saved: boolead = true;
-  exportImport: boolean = false;
+  settings: boolean = false;
   filterString: string = '';
   searchInTitle: boolean = true;
   searchInDescription: boolean = true;
@@ -58,6 +58,10 @@ export class AppComponent {
       var mainMenuRow = document.getElementById('mainMenuRow');
       if (mainMenuRow) {
         this.mainMenuHeight = mainMenuRow.clientHeight;
+        var maxHeight = window.innerHeight - this.mainMenuHeight - 25; // 25 – padding.
+        if (maxHeight > this.infoRowHeight) {
+          this.infoRowHeight = maxHeight;
+        }
       }
     }, 500);
 
@@ -188,8 +192,8 @@ export class AppComponent {
     this.adjustInfoHeight();
   }
 
-  toggleExpImp() {
-    this.exportImport = !this.exportImport;
+  toggleSettings() {
+    this.settings = !this.settings;
 
     this.adjustInfoHeight();
   }
@@ -216,9 +220,13 @@ export class AppComponent {
           resultHeight -= searchingRow.clientHeight;
           console.log('Searching height: ' + searchingRow.clientHeight);
         }
-      }
 
-      //
+        var settingsRow = document.getElementById('settingsRow');
+        if (settingsRow) {
+          resultHeight = resultHeight - settingsRow.clientHeight + this.mainMenuHeight;
+          console.log('Settings height: ' + settingsRow.clientHeight);
+        }
+      }
 
       var infoRow = document.getElementById('infoRow');
       infoRow.style.height = resultHeight + 'px';
@@ -368,5 +376,10 @@ export class AppComponent {
 
   mouseup() {
     this.mouseIsDown = false;
+  }
+
+  newNotebook() {
+    this.notes = this.notesService.getNotes('');
+    this.updated = true;
   }
 }

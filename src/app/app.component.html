@@ -2,7 +2,7 @@
   <a href="https://github.com/Roman-Tarasiuk/Notes/wiki" style="float: right">Help</a>
 
   <!-- Main menu buttons. -->
-  <div id="mainMenuRow" class="row edit-warning my-2" *ngIf="!exportImport && !editing && !adding" [class.updated]="updated">
+  <div id="mainMenuRow" class="row edit-warning my-2" *ngIf="!settings && !editing && !adding" [class.updated]="updated">
     <div style="display: inline-block; float: left;">
       <button class="btn btn-danger mr-1" *ngIf="updated" (click)="saveChanges()">Save</button>
     </div>
@@ -12,7 +12,7 @@
     </div>
     <div style="display: inline-block;">
       <button class="btn btn-success mr-1" *ngIf="!searching" (click)="toggleSearching()"><span class="glyphicon glyphicon-search"></span></button>
-      <button class="btn btn-success mr-1" (click)="toggleExpImp()" [class.unsavedToStorage]="!saved">Export / Import</button>
+      <button class="btn btn-success mr-1" (click)="toggleSettings()" [class.unsavedToStorage]="!saved"><span class="glyphicon glyphicon-cog"></span></button>
     </div>
   </div>
 
@@ -33,7 +33,6 @@
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
     <button class="btn btn-info mr-1" (click)="cancelModification()">Close</button>
-    <label style="float: right;"><input type="checkbox" [(ngModel)]="shrinkHeight" (click)="adjustInfoHeight()">Shrink height</label>
   </div>
 
   <!-- Searching. -->
@@ -57,8 +56,8 @@
     </div>
   </div>
 
-  <!-- Export / Import. -->
-  <div id="expImpRow" *ngIf="exportImport" class="row my-2">
+  <!-- Settings. -->
+  <div id="settingsRow" *ngIf="settings" class="row my-2">
     <button class="btn btn-warning mr-1" (click)="exportNotes()">Export to</button>
     <label class="btn btn-warning mr-1">
       Import from
@@ -67,7 +66,11 @@
           (change)="importNotes($event)"
           style="display: none">
     </label>
-    <button class="btn btn-info" (click)="toggleExpImp()">Close</button>
+    <button class="btn btn-warning mr-1" (click)="newNotebook()">New notebook</button>
+    <br>
+    <label><input type="checkbox" [(ngModel)]="shrinkHeight" (click)="adjustInfoHeight()">Shrink height</label>
+    <br>
+    <button class="btn btn-info" (click)="toggleSettings()">Close</button>
   </div>
 
   <!-- Notes list and view. -->

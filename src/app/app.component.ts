@@ -39,6 +39,7 @@ export class AppComponent {
   readonly snippetStart: string = '<pre><code class="csharp hljs">';
   readonly snippetEnd: string = '</code></pre>';
   mouseIsDown: boolean = false;
+  mouseDownTime: Date;
 
   titleEl: HTMLInputElement;
   descriptionEl: HTMLInputElement;
@@ -345,9 +346,17 @@ export class AppComponent {
 
   mousedown(i) {
     this.mouseIsDown = true;
+    this.mouseDownTime = new Date();
 
     setTimeout(() => {
       if (this.mouseIsDown) {
+        // Skip single clicks.
+        var now = new Date();
+        var diff = now.getTime() - this.mouseDownTime.getTime();
+        if (diff < 1000) {
+          return;
+        }
+
         var indexStr = prompt('Move to index:');
         if (indexStr == null) {
           return;

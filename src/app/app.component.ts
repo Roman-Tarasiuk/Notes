@@ -27,7 +27,7 @@ export class AppComponent {
   adding: boolean = false;
   searching: boolean = false;
   updated: boolean = false;
-  saved: boolead = true;
+  saved: boolean = true;
   settings: boolean = false;
   filterString: string = '';
   searchInTitle: boolean = true;

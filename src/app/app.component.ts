@@ -19,6 +19,7 @@ import cs from 'highlight.js/lib/languages/cs';
 export class AppComponent {
   notes: Note[];
   current: Note = null;
+  currentIndex: number = -1;
   notesService: NotesService;
 
   //
@@ -103,12 +104,11 @@ export class AppComponent {
     }, 100);
   }
 
-  clicked(n: Note) {
-    if (this.adding) {
-      return;
-    }
+  clicked(n: Note, i: number) {
+    this.currentIndex = i;
+    var tmp = new Note(n.title, n.description, n.text);
 
-    this.current = n;
+    this.current = tmp;
     this.highlightCode();
 
     if (this.editing) {
@@ -246,7 +246,7 @@ export class AppComponent {
 
     var newNode = new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value);
     this.notes.push(newNode);
-    this.current = newNode;
+    this.current = new Note('', '', '');
 
     this.titleEl.value = '';
     this.descriptionEl.value = '';
@@ -255,8 +255,6 @@ export class AppComponent {
     this.highlightCode();
 
     this.updated = true;
-
-    // this.toggleAdding();
   }
 
   updateNote() {
@@ -265,6 +263,8 @@ export class AppComponent {
     this.current.title = this.titleEl.value;
     this.current.description = this.descriptionEl.value;
     this.current.text = this.textEl.value;
+
+    this.notes[this.currentIndex] = this.current;
 
     this.highlightCode();
 
@@ -300,7 +300,9 @@ export class AppComponent {
   }
 
   isActive(n: Note) {
-    return n == this.current;
+    return n.title == this.current.title
+        && n.description == this.current.description
+        && n.text == this.current.text;
   }
 
   exportNotes() {

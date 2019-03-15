@@ -33,6 +33,7 @@
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
     <button class="btn btn-info mr-1" (click)="cancelModification()">Close</button>
+    <span *ngIf="editing && searching" class="alert alert-info">Updates will be seen after closing search</span>
   </div>
 
   <!-- Searching. -->

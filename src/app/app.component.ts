@@ -105,10 +105,11 @@ export class AppComponent {
   }
 
   clicked(n: Note, i: number) {
-    this.currentIndex = i;
-    var tmp = new Note(n.title, n.description, n.text);
+    this.currentIndex = this.index(n);
+    console.log('clicked: ' + this.currentIndex);
+    console.log(n.title);
 
-    this.current = tmp;
+    this.current = new Note(n.title, n.description, n.text);
     this.highlightCode();
 
     if (this.editing) {
@@ -118,6 +119,18 @@ export class AppComponent {
       this.descriptionEl.value = this.current.description;
       this.textEl.value = this.current.text;
     }
+  }
+
+  index(n: Note): number {
+    for (var i = 0; i < this.notes.length; i++) {
+      if (this.notes[i].title == n.title
+        && this.notes[i].description == n.description
+        && this.notes[i].text == n.text) {
+          return i;
+        }
+    }
+
+    return -1;
   }
 
   sleep(ms) {

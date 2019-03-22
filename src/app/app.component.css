@@ -117,6 +117,11 @@
     background: #1c1c1c;
     color: #fff;
   }
+  
+  .al {
+      vertical-align: middle;
+      padding: 8px;
+  }
 
   /*http://csharpindepth.com/CodeFormatterTool.aspx*/
   :host ::ng-deep table.code,

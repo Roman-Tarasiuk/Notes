@@ -323,6 +323,10 @@ export class AppComponent {
     this.saved = true;
   }
 
+  saveNotesAsText() {
+    this.notesService.saveNotesAsTextToFile(this.notes);
+  }
+
   async importNotes(event) {
     var notesText = await this.notesService.openFile(event) as string;
     this.notes = this.notesService.getNotes(notesText);

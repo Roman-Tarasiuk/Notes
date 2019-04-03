@@ -43,6 +43,17 @@ export class NotesService {
     this.download(JSON.stringify(notes), 'notes.json.txt', 'text/plain');
   }
 
+  saveNotesAsTextToFile(notes: Note[]) {
+    var result = '';
+    for (var i = 0; i < notes.length; i++) {
+      result += notes[i].title + '\n'
+              + notes[i].description + '\n'
+              + notes[i].text + '\n\n';
+    }
+
+    this.download(result, 'notes.txt', 'text/plain');
+  }
+
   async openFile(event) {
     var that = this;
     var file = event.target.files[0];

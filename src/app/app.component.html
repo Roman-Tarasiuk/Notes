@@ -60,6 +60,7 @@
   <!-- Settings. -->
   <div id="settingsRow" *ngIf="settings" class="row my-2">
     <button class="btn btn-warning mr-1" (click)="exportNotes()">Export to</button>
+    <button class="btn btn-warning mr-1" (click)="saveNotesAsText()">Save as text</button>
     <label class="btn btn-warning mr-1">
       Import from
       <input type="file"

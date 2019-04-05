@@ -28,7 +28,8 @@ export class AppComponent {
   adding: boolean = false;
   searching: boolean = false;
   updated: boolean = false;
-  saved: boolean = true;
+  imported: boolean = false;
+  savedToFile: boolean = true;
   settings: boolean = false;
   filterString: string = '';
   searchInTitle: boolean = true;
@@ -268,6 +269,7 @@ export class AppComponent {
     this.highlightCode();
 
     this.updated = true;
+    this.imported = false;
   }
 
   updateNote() {
@@ -282,6 +284,7 @@ export class AppComponent {
     this.highlightCode();
 
     this.updated = true;
+    this.imported = false;
   }
 
   private initEditorControls() {
@@ -293,7 +296,10 @@ export class AppComponent {
   saveChanges() {
     this.notesService.saveNotes(this.notes);
     this.updated = false;
-    this.saved = false;
+    if (!this.imported) {
+      this.savedToFile = false;
+      this.imported = false;
+    }
   }
 
   deleteNote() {
@@ -301,7 +307,9 @@ export class AppComponent {
 
     if (index >= 0) {
       this.notes.splice(index, 1);
+
       this.updated = true;
+      this.imported = false;
 
       if (this.notes.length > 0) {
         if (index >= this.notes.length) {
@@ -320,7 +328,7 @@ export class AppComponent {
 
   exportNotes() {
     this.notesService.saveNotesToFile(this.notes);
-    this.saved = true;
+    this.savedToFile = true;
   }
 
   saveNotesAsText() {
@@ -333,6 +341,7 @@ export class AppComponent {
     if (this.notes.length > 0) {
       this.current = this.notes[0];
       this.updated = true;
+      this.imported = true;
       this.highlightCode();
     }
   }

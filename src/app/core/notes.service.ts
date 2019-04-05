@@ -8,7 +8,7 @@ export class NotesService {
 
   constructor() { }
 
-  getNotesPlainText(): string {
+  getNotesLocal(): string {
     return localStorage.getItem('myNotes');
   }
 
@@ -22,7 +22,7 @@ export class NotesService {
       notes = notesText;
     }
     else {
-      notes = this.getNotesPlainText();
+      notes = this.getNotesLocal();
     }
 
     if (notes != null && notes != '' && notes != undefined) {
@@ -31,12 +31,12 @@ export class NotesService {
     return [];
   }
 
-  saveNotesText(notes: string) {
+  saveNotesLocal(notes: string) {
     localStorage.setItem('myNotes', notes);
   }
 
   saveNotes(notes: Note[]) {
-    this.saveNotesText(JSON.stringify(notes));
+    this.saveNotesLocal(JSON.stringify(notes));
   }
 
   saveNotesToFile(notes: Note[]) {

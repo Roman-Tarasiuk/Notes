@@ -114,11 +114,7 @@ export class AppComponent {
     this.highlightCode();
 
     if (this.editing) {
-      this.initEditorControls();
-
-      this.titleEl.value = this.current.title;
-      this.descriptionEl.value = this.current.description;
-      this.textEl.value = this.current.text;
+      this.showCurrent();
     }
   }
 
@@ -178,14 +174,18 @@ export class AppComponent {
 
     if (this.editing) {
       await this.sleep(500);
+      this.showCurrent();
+    }
+
+    this.adjustInfoHeight();
+  }
+  
+  showCurrent() {
       this.initEditorControls();
 
       this.titleEl.value = this.current.title;
       this.descriptionEl.value = this.current.description;
       this.textEl.value = this.current.text;
-    }
-
-    this.adjustInfoHeight();
   }
 
   toggleAdding() {
@@ -260,7 +260,7 @@ export class AppComponent {
 
     var newNode = new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value);
     this.notes.push(newNode);
-    this.current = new Note('', '', '');
+    this.current = new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value);
 
     this.titleEl.value = '';
     this.descriptionEl.value = '';
@@ -270,6 +270,8 @@ export class AppComponent {
 
     this.updated = true;
     this.imported = false;
+    
+    this.showCurrent();
   }
 
   updateNote() {
@@ -303,9 +305,24 @@ export class AppComponent {
   }
 
   deleteNote() {
-    var index = this.notes.indexOf(this.current);
+    var that = this;
+    function getCurrentIndex(e: Note) {
+        for (var i = 0; i < that.notes.length; i++) {
+            if (e.title == that.notes[i].title &&
+                e.description == that.notes[i].description &&
+                e.text == that.notes[i].text
+            ) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
+    var index = getCurrentIndex(this.current);
 
     if (index >= 0) {
+      console.log('Trying to delete: ' + index);
       this.notes.splice(index, 1);
 
       this.updated = true;
@@ -317,6 +334,9 @@ export class AppComponent {
         }
         this.current = this.notes[index];
       }
+    }
+    else {
+      console.log('Trying to delete: no item...');
     }
   }
 

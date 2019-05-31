@@ -20,11 +20,11 @@
   <div id="editingRow" class="row" *ngIf="editing || adding">
     <div class="my-2">
       <label>Title:</label>
-      <textarea id="title"       class="form-control" rows="1" [(ngModel)]="current.title"></textarea>
+      <textarea id="title"       class="form-control" rows="1" [(ngModel)]="_title"></textarea>
       <label>Description:</label>
-      <textarea id="description" class="form-control" rows="1" [(ngModel)]="current.description"></textarea>
+      <textarea id="description" class="form-control" rows="1" [(ngModel)]="_description"></textarea>
       <label>Text:</label>
-      <textarea id="text"        class="form-control" rows="5" [(ngModel)]="current.text"></textarea>
+      <textarea id="text"        class="form-control" rows="5" [(ngModel)]="_text"></textarea>
     </div>
     <button class="btn btn-warning mr-1" *ngIf="adding" (click)="addNote()">Add</button>
     <button class="btn btn-success mr-1" *ngIf="adding || editing" (click)="codeTemplate()">Code template</button>
@@ -33,7 +33,6 @@
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="updateNote()">Update</button>
     <button class="btn btn-warning mr-1" *ngIf="editing" (click)="deleteNote()">Delete</button>
     <button class="btn btn-info mr-1" (click)="cancelModification()">Close</button>
-    <span *ngIf="editing && searching" class="alert alert-info al">Updates will be seen after closing search</span>
   </div>
 
   <!-- Searching. -->
@@ -93,7 +92,7 @@
           <div class="navbar-collapse collapse sidebar-navbar-collapse">
             <ul class="nav navbar-nav">
               <li *ngFor="let n of notes | filter : searchText : { inTitle: searchInTitle, inDescription: searchInDescription, inText: searchInText}; let i = index"
-                  (click)="clicked(n, i)"
+                  (click)="clicked(n)"
                   [class.active]="isActive(n)"
                   class="list-item">
                 <div class="note" (mousedown)="mousedown(i)" (mouseup)="mouseup()">

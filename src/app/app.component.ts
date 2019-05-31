@@ -24,6 +24,9 @@ export class AppComponent {
 
   //
 
+  _title: string = '';
+  _description: string = '';
+  _text: string = '';
   editing: boolean = false;
   adding: boolean = false;
   searching: boolean = false;
@@ -105,12 +108,17 @@ export class AppComponent {
     }, 100);
   }
 
-  clicked(n: Note, i: number) {
+  clicked(n: Note) {
     this.currentIndex = this.index(n);
     console.log('clicked: ' + this.currentIndex);
     console.log(n.title);
 
-    this.current = new Note(n.title, n.description, n.text);
+    this.current = n;
+
+    this._title = n.title;
+    this._description = n.description;
+    this._text = n.text;
+
     this.highlightCode();
 
     if (this.editing) {
@@ -140,7 +148,7 @@ export class AppComponent {
     const selStart = this.textEl.selectionStart;
     const selEnd = this.textEl.selectionEnd;
 
-    this.current.text = this.textEl.value.substr(0, selStart)
+    this._text = this.textEl.value.substr(0, selStart)
       + this.snippetStart
       + this.textEl.value.substr(selStart, selEnd - selStart)
       + this.snippetEnd
@@ -153,7 +161,7 @@ export class AppComponent {
     const selStart = this.textEl.selectionStart;
     const selEnd = this.textEl.selectionEnd;
 
-    this.current.text = this.textEl.value.substr(0, selStart)
+    this._text = this.textEl.value.substr(0, selStart)
       + js_beautify(this.textEl.value.substr(selStart, selEnd - selStart), {
         'brace_style': 'expand'
       })
@@ -165,8 +173,7 @@ export class AppComponent {
       return;
     }
 
-    if (this.current == null)
-    {
+    if (this.current == null) {
       return;
     }
 
@@ -179,7 +186,7 @@ export class AppComponent {
 
     this.adjustInfoHeight();
   }
-  
+
   showCurrent() {
       this.initEditorControls();
 
@@ -195,7 +202,10 @@ export class AppComponent {
 
     this.adding = !this.adding;
     if (this.adding == true) {
-      this.current = new Note('', '', '');
+      // this.current = new Note('', '', '');
+      this._title = '';
+      this._description = '';
+      this._text = '';
     }
 
     this.adjustInfoHeight();
@@ -260,7 +270,12 @@ export class AppComponent {
 
     var newNode = new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value);
     this.notes.push(newNode);
-    this.current = new Note(this.titleEl.value, this.descriptionEl.value, this.textEl.value);
+    this.current = newNode;
+    this.currentIndex = this.notes.length - 1;
+
+    this._title = this.current.title;
+    this._description = this.current.description;
+    this._text = this.current.text;
 
     this.titleEl.value = '';
     this.descriptionEl.value = '';
@@ -270,16 +285,22 @@ export class AppComponent {
 
     this.updated = true;
     this.imported = false;
-    
+
     this.showCurrent();
   }
 
   updateNote() {
     this.initEditorControls();
 
+    console.log(this.currentIndex);
+
     this.current.title = this.titleEl.value;
     this.current.description = this.descriptionEl.value;
     this.current.text = this.textEl.value;
+
+    this._title = this.current.title;
+    this._description = this.current.description;
+    this._text = this.current.text;
 
     this.notes[this.currentIndex] = this.current;
 
@@ -305,21 +326,7 @@ export class AppComponent {
   }
 
   deleteNote() {
-    var that = this;
-    function getCurrentIndex(e: Note) {
-        for (var i = 0; i < that.notes.length; i++) {
-            if (e.title == that.notes[i].title &&
-                e.description == that.notes[i].description &&
-                e.text == that.notes[i].text
-            ) {
-                return i;
-            }
-        }
-        
-        return -1;
-    }
-    
-    var index = getCurrentIndex(this.current);
+    var index = this.index(this.current);
 
     if (index >= 0) {
       console.log('Trying to delete: ' + index);
@@ -333,6 +340,10 @@ export class AppComponent {
           index = this.notes.length - 1;
         }
         this.current = this.notes[index];
+
+        this._title = this.current.title;
+        this._description = this.current.description;
+        this._text = this.current.text;
       }
     }
     else {
@@ -360,6 +371,11 @@ export class AppComponent {
     this.notes = this.notesService.getNotes(notesText);
     if (this.notes.length > 0) {
       this.current = this.notes[0];
+
+      this._title = this.current.title;
+      this._description = this.current.description;
+      this._text = this.current.text;
+
       this.updated = true;
       this.imported = true;
       this.highlightCode();

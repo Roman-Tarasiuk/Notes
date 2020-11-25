@@ -43,6 +43,7 @@ export class AppComponent {
   shrinkHeight: boolean = true;
   readonly snippetStart: string = '<pre><code class="csharp hljs">';
   readonly snippetEnd: string = '</code></pre>';
+  readonly enabledTags: string[] = [ 'pre', 'code', 'strong', 'br' ];
   mouseIsDown: boolean = false;
   mouseDownTime: Date;
 
@@ -75,29 +76,27 @@ export class AppComponent {
   }
 
   formatOutput(text: string): string {
-   var tmpStart = '===pre===code class="csharp"===';
-   var tmpEnd = '===/code===/pre===';
+    var result = text;
 
-   var reStart1 = new RegExp(this.snippetStart, 'g');
-   var reEnd1 = new RegExp(this.snippetEnd, 'g');
+    for (var i = 0; i < this.enabledTags.length; i++) {
+      result = result.replace(new RegExp('<(' + this.enabledTags[i] + '.*?)>', 'g'),
+                            '!!!===$1===!!!' )
+                     .replace(new RegExp('<(/' + this.enabledTags[i] + ')>', 'g'),
+                            '!!!===$1===!!!' );
+    }
 
-   var reStart2 = new RegExp(tmpStart, 'g');
-   var reEnd2 = new RegExp(tmpEnd, 'g');
+    result = result.replace(/</g, '&lt;')
+                   .replace(/>/g, '&gt');
 
-   var reLt = /</g;
-   var reGt = />/g;
+    result = result.replace(/!!!===/g, '<')
+                   .replace(/===!!!/g, '>');
 
-   var result = text
-               .replace(reStart1, tmpStart)
-               .replace(reEnd1, tmpEnd)
-               .replace(reLt, '&lt;')
-               .replace(reGt, '&gt')
-               .replace(reStart2, this.snippetStart)
-               .replace(reEnd2, this.snippetEnd)
-               .replace(new RegExp(this.snippetStart + '\r*\n', 'g'), this.snippetStart)
-               .replace(new RegExp('\r*\n' + this.snippetEnd, 'g'), this.snippetEnd);
+    //
 
-   return result;
+    result = result.replace(new RegExp(this.snippetStart + '\r*\n', 'g'), this.snippetStart)
+                   .replace(new RegExp('\r*\n' + this.snippetEnd, 'g'), this.snippetEnd);
+
+    return result;
   }
 
   highlightCode() {
